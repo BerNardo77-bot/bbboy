@@ -1,8 +1,9 @@
 # Luffy7 Telegram
 
 ## Nube (Railway / Render)
-El deploy en la nube usa el repo **[bbboy](https://github.com/BerNardo77-bot/bbboy)**, no este.
-Guia: [CLOUD.md](CLOUD.md)
+Bot en Railway: **@Bbboy_27bot** (repo **bbboy**).
+Guia: [CLOUD.md](CLOUD.md) · [RAILWAY.md](RAILWAY.md)
+Un solo token: no corras el mismo bot en Termux a la vez (error 409).
 
 ## v1.5.19
 - `/wiki`: resumen del artículo + enlace completo (como WhatsApp Andrewmisses)
