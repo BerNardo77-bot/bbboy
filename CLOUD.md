@@ -1,6 +1,7 @@
 # Luffy7 Telegram en la nube (Railway o Render)
 
-Version: 1.5.18
+Version: 1.5.19
+Redeploy stamp: 2026-09-20b after Termux kill
 Repo nube: https://github.com/BerNardo77-bot/bbboy
 Codigo fuente (Termux): https://github.com/BerNardo77-bot/Luffy7-Telegram
 Bot Termux: @LuffyYampiBot
