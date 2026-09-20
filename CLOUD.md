@@ -1,11 +1,10 @@
 # Luffy7 Telegram en la nube (Railway o Render)
 
 Version: 1.5.19
-Redeploy stamp: 2026-09-20b after Termux kill
 Repo nube: https://github.com/BerNardo77-bot/bbboy
 Codigo fuente (Termux): https://github.com/BerNardo77-bot/Luffy7-Telegram
 Bot Termux: @LuffyYampiBot
-Bot nube: el que crees en BotFather (token distinto)
+Bot nube: @Bbboy_27bot (Railway). Token distinto al de Termux (@LuffyYampiBot).
 
 Guia paso a paso (bot nuevo + Railway): [RAILWAY.md](RAILWAY.md)
 
@@ -47,7 +46,7 @@ No cierres el bot de WhatsApp si esta en el mismo celular; mata solo Node del de
 8. Deploy / Redeploy si no arranco solo.
 9. Abre Logs. Debe salir:
 
-Luffy7 Telegram v1.5.18 arrancando...
+Luffy7 Telegram v1.5.19 arrancando...
 Luffy7 Telegram online como @LuffyYampiBot
 Polling activo
 
@@ -104,3 +103,19 @@ Haz push a main en BerNardo77-bot/bbboy. Railway y Render redespliegan solos.
 O en el panel: Redeploy.
 
 Sigue apagado Termux.
+
+---
+
+## Error 409 (Conflict)
+
+Telegram solo permite **un** proceso haciendo getUpdates por token.
+
+Si Logs dicen `409` / `Conflict: terminated by other getUpdates`:
+
+1. En Termux: `pkill -9 -f node` y no arranques el bot de la nube ahi.
+2. Revisa que no haya otro Railway/Render con el mismo `TELEGRAM_BOT_TOKEN`.
+3. Si hace falta: @BotFather → bot de la nube → Revoke token → pega el nuevo solo en Variables de Railway → Redeploy.
+4. Nunca pegues el token en chats, issues ni capturas.
+5. Bien = Logs con `Luffy7 Telegram v1.5.19` + `[vivo] ... esperando mensajes...` sin 409.
+
+@Bbboy_27bot = nube (bbboy). @LuffyYampiBot = Termux (otro token).
