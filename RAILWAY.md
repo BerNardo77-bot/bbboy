@@ -2,6 +2,8 @@
 
 Repo: https://github.com/BerNardo77-bot/bbboy
 Version del codigo: 1.5.19
+Bot nube: @Bbboy_27bot
+
 
 Esto crea un bot de Telegram NUEVO y lo deja 24/7 en Railway.
 @LuffyYampiBot en Termux puede seguir. Cada bot tiene su token.
@@ -82,7 +84,7 @@ Deben verse 4 service variables (mas las que Railway pone solo).
 4. Deployments → ultimo deploy → Logs.
 5. Debe decir:
 
-Luffy7 Telegram v1.5.18 arrancando...
+Luffy7 Telegram v1.5.19 arrancando...
 Luffy7 Telegram online como @TuBotNuevo
 Polling activo
 
@@ -117,3 +119,17 @@ Trial 30 dias / $5: el bot se apaga si no hay plan o credito.
 1. Actualiza el codigo en BerNardo77-bot/bbboy (main).
 2. Railway redespliega solo, o pulsa Redeploy.
 3. Termux de Yampi no se toca.
+
+---
+
+## Error 409 (Conflict)
+
+Un solo proceso por token. Si choca con Termux u otro deploy:
+
+1. `pkill -9 -f node` en Termux.
+2. Revoke token en @BotFather para @Bbboy_27bot.
+3. Actualiza `TELEGRAM_BOT_TOKEN` en Variables.
+4. Redeploy una sola vez.
+5. Confirma Logs `v1.5.19` + `[vivo]` sin 409.
+
+No compartas el token en chats.
