@@ -1,7 +1,7 @@
 # Luffy7 Telegram en Railway (bot nuevo, sin Termux)
 
 Repo: https://github.com/BerNardo77-bot/bbboy
-Version del codigo: 1.5.18
+Version del codigo: 1.5.19
 
 Esto crea un bot de Telegram NUEVO y lo deja 24/7 en Railway.
 @LuffyYampiBot en Termux puede seguir. Cada bot tiene su token.
