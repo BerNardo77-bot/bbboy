@@ -643,11 +643,12 @@ export async function getSpotify(query) {
   const keys = apiKeys()
   let last = 'Sin resultado'
   const isUrl = /open\.spotify\.com\/track\//i.test(query)
+  let meta = null
+  let url = String(query || '').trim()
 
+  // 1) Resolver metadata (search o URL)
   for (const key of keys) {
     try {
-      let url = query
-      let meta = null
       if (!isUrl) {
         const search = await fetchJson(
           `${apiUrl}/search/spotify?query=${encodeURIComponent(query)}&key=${key}`
@@ -658,7 +659,21 @@ export async function getSpotify(query) {
         }
         meta = search.data[0]
         url = meta.url
+        break
+      } else {
+        url = query.split(/\s+/)[0]
+        break
       }
+    } catch (e) {
+      last = e.message || last
+    }
+  }
+
+  if (!isUrl && !meta) return { error: last }
+
+  // 2) Intentar descarga Spotify
+  for (const key of keys) {
+    try {
       const res = await fetchJson(
         `${apiUrl}/dl/spotify?url=${encodeURIComponent(url)}&key=${key}`
       )
@@ -669,7 +684,8 @@ export async function getSpotify(query) {
           artist: res.data.artist || meta?.artist || '',
           album: res.data.album || meta?.album || '',
           cover: res.data.image || res.data.cover || meta?.image || meta?.cover,
-          url
+          url,
+          source: 'spotify'
         }
       }
       last = res?.message || last
@@ -677,6 +693,91 @@ export async function getSpotify(query) {
       last = e.message || last
     }
   }
+
+  // 3) Fallback YouTube (Alyacore /dl/spotify suele estar caído)
+  if (isUrl && !meta) {
+    try {
+      const page = await fetch(url, {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Linux; Android 15; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',
+          Accept: 'text/html'
+        },
+        timeout: 30000
+      })
+      if (page.ok) {
+        const html = await page.text()
+        const title = (html.match(/property="og:title" content="([^"]+)"/i) || [])[1]
+        const image = (html.match(/property="og:image" content="([^"]+)"/i) || [])[1]
+        const desc = (html.match(/property="og:description" content="([^"]+)"/i) || [])[1] || ''
+        const parts = desc.split(/[·•|]/).map((s) => s.trim()).filter(Boolean)
+        if (title) {
+          meta = {
+            title,
+            artist: parts[1] || '',
+            album: parts[2] || '',
+            image,
+            url
+          }
+        }
+      }
+    } catch (e) {
+      last = e.message || last
+    }
+  }
+
+  const ytQuery = [meta?.title || meta?.name, meta?.artist]
+    .filter(Boolean)
+    .join(' ')
+    .trim() || String(query || '').trim()
+
+  // Prefer youtubeplayv2 by query (mismo path que /play)
+  for (const key of keys) {
+    for (const ep of ['youtubeplayv2', 'youtubeplay']) {
+      try {
+        const res = await fetchJson(
+          `${apiUrl}/dl/${ep}?query=${encodeURIComponent(ytQuery)}&type=mp3&quality=320&key=${key}`
+        )
+        const dl = res?.data?.dl || res?.result?.dl || res?.dl
+        if (res?.status && dl) {
+          return {
+            dl,
+            title: meta?.title || meta?.name || res.data?.title || ytQuery,
+            artist: meta?.artist || '',
+            album: meta?.album || '',
+            cover: meta?.image || meta?.cover || res.data?.thumbnail,
+            url,
+            source: 'youtube'
+          }
+        }
+        last = res?.message || last
+      } catch (e) {
+        last = e.message || last
+      }
+    }
+  }
+
+  try {
+    const video = await resolveYoutube(ytQuery)
+    if (video?.url) {
+      const audio = await getAudioLink(video.url, video.title || ytQuery)
+      if (audio?.dl) {
+        return {
+          dl: audio.dl,
+          title: meta?.title || meta?.name || audio.title || video.title || ytQuery,
+          artist: meta?.artist || '',
+          album: meta?.album || '',
+          cover: meta?.image || meta?.cover || video.thumbnail,
+          url,
+          source: 'youtube'
+        }
+      }
+      last = audio?.error || last
+    }
+  } catch (e) {
+    last = e.message || last
+  }
+
   return { error: last }
 }
 

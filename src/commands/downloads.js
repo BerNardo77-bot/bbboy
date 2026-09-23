@@ -197,7 +197,7 @@ export function createDownloadHandlers(sendOrCompress) {
           'No se pudo descargar.\n' + (got.error || '')
         )
       }
-      const caption = [got.title, got.artist].filter(Boolean).join(' — ')
+      const caption = [got.title, got.artist].filter(Boolean).join(' — ') + (got.source === 'youtube' ? ' (YouTube)' : '')
       await ctx.api.editMessageText(ctx.chat.id, status.message_id, `Descargando: ${caption}`)
       await downloadToFile(got.dl, out)
       await sendOrCompress(ctx, out, {
