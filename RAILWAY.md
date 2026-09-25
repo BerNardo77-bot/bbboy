@@ -1,7 +1,7 @@
 # Luffy7 Telegram en Railway (bot nuevo, sin Termux)
 
 Repo: https://github.com/BerNardo77-bot/bbboy
-Version del codigo: 1.5.21
+Version del codigo: 1.5.22
 Bot nube: @Bbboy_27bot
 
 
@@ -84,7 +84,7 @@ Deben verse 4 service variables (mas las que Railway pone solo).
 4. Deployments → ultimo deploy → Logs.
 5. Debe decir:
 
-Luffy7 Telegram v1.5.21 arrancando...
+Luffy7 Telegram v1.5.22 arrancando...
 Luffy7 Telegram online como @TuBotNuevo
 Polling activo
 
@@ -130,6 +130,6 @@ Un solo proceso por token. Si choca con Termux u otro deploy:
 2. Revoke token en @BotFather para @Bbboy_27bot.
 3. Actualiza `TELEGRAM_BOT_TOKEN` en Variables.
 4. Redeploy una sola vez.
-5. Confirma Logs `v1.5.21` + `[vivo]` sin 409.
+5. Confirma Logs `v1.5.22` + `[vivo]` sin 409.
 
 No compartas el token en chats.
