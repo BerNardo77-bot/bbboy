@@ -1,6 +1,6 @@
 # Luffy7 Telegram en la nube (Railway o Render)
 
-Version: 1.5.20
+Version: 1.5.21
 Repo nube: https://github.com/BerNardo77-bot/bbboy
 Codigo fuente (Termux): https://github.com/BerNardo77-bot/Luffy7-Telegram
 Bot Termux: @LuffyYampiBot
@@ -46,7 +46,7 @@ No cierres el bot de WhatsApp si esta en el mismo celular; mata solo Node del de
 8. Deploy / Redeploy si no arranco solo.
 9. Abre Logs. Debe salir:
 
-Luffy7 Telegram v1.5.20 arrancando...
+Luffy7 Telegram v1.5.21 arrancando...
 Luffy7 Telegram online como @LuffyYampiBot
 Polling activo
 
@@ -116,6 +116,6 @@ Si Logs dicen `409` / `Conflict: terminated by other getUpdates`:
 2. Revisa que no haya otro Railway/Render con el mismo `TELEGRAM_BOT_TOKEN`.
 3. Si hace falta: @BotFather → bot de la nube → Revoke token → pega el nuevo solo en Variables de Railway → Redeploy.
 4. Nunca pegues el token en chats, issues ni capturas.
-5. Bien = Logs con `Luffy7 Telegram v1.5.20` + `[vivo] ... esperando mensajes...` sin 409.
+5. Bien = Logs con `Luffy7 Telegram v1.5.21` + `[vivo] ... esperando mensajes...` sin 409.
 
 @Bbboy_27bot = nube (bbboy). @LuffyYampiBot = Termux (otro token).
